@@ -4,7 +4,7 @@ import threading
 
 
 def conn_scan(tgt_host, tgt_port):
-    screen_lock = threading.Semaphore(value=1)
+    screen_lock = threading.Semaphore()
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as conn_skt:
         try:
@@ -35,6 +35,7 @@ def port_scan(tgt_host, tgt_ports):
         print(f'\n[+] Scan Results for: {tgt_ip}')
 
     socket.setdefaulttimeout(1)
+
     for ports in tgt_ports:
         t = threading.Thread(target=conn_scan, args=(tgt_host, int(ports)))
         t.start()
