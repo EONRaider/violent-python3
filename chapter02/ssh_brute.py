@@ -34,7 +34,7 @@ def connect(host, user, password, release=True):
 
 def main():
     parser = argparse.ArgumentParser(
-        usage='ssh_brute.py TARGET_HOST -u USERNAME -f PASSWD_FILE')
+        usage='python3 ssh_brute.py TARGET_HOST -u USERNAME -f PASSWD_FILE')
     parser.add_argument('tgt_host', type=str, metavar='TARGET_HOST',
                         help="specify target host's IP address")
     parser.add_argument('-u', type=str, metavar='USERNAME', required=True,
