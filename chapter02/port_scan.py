@@ -3,24 +3,6 @@ import socket
 import threading
 
 
-def conn_scan(tgt_host, tgt_port):
-    screen_lock = threading.Semaphore()
-
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as conn_skt:
-        try:
-            conn_skt.connect((tgt_host, tgt_port))
-            conn_skt.send(b'ViolentPython\r\n')
-            results = conn_skt.recv(100).decode('utf-8')
-            screen_lock.acquire()
-            print(f'[+] {tgt_port}/tcp open')
-            print(f'   [>] {results}')
-        except OSError:
-            screen_lock.acquire()
-            print(f'[-] {tgt_port}/tcp closed')
-        finally:
-            screen_lock.release()
-
-
 def port_scan(tgt_host, tgt_ports):
     try:
         tgt_ip = socket.gethostbyname(tgt_host)
@@ -39,6 +21,23 @@ def port_scan(tgt_host, tgt_ports):
     for ports in tgt_ports:
         t = threading.Thread(target=conn_scan, args=(tgt_host, int(ports)))
         t.start()
+
+
+def conn_scan(tgt_host, tgt_port):
+    screen_lock = threading.Semaphore()
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as conn_skt:
+        try:
+            conn_skt.connect((tgt_host, tgt_port))
+            conn_skt.send(b'ViolentPython\r\n')
+            results = conn_skt.recv(100).decode('utf-8')
+            screen_lock.acquire()
+            print(f'[+] {tgt_port}/tcp open')
+            print(f'   [>] {results}')
+        except OSError:
+            screen_lock.acquire()
+            print(f'[-] {tgt_port}/tcp closed')
+        finally:
+            screen_lock.release()
 
 
 if __name__ == '__main__':
