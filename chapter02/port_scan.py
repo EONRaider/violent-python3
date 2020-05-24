@@ -13,7 +13,7 @@ def conn_scan(tgt_host, tgt_port):
             results = conn_skt.recv(100).decode('utf-8')
             screen_lock.acquire()
             print(f'[+] {tgt_port}/tcp open')
-            print(f'[+] {results}')
+            print(f'   [>] {results}')
         except OSError:
             screen_lock.acquire()
             print(f'[-] {tgt_port}/tcp closed')
