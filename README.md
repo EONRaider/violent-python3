@@ -50,6 +50,8 @@ user@host:~/DIR$ source venv/bin/activate
        code's logic.
 
 ## Refactoring
+Files not listed below can be assumed to have been refactored in one way or
+ another as established in the "Notes" section.
 - `chapter01/vuln_scanner.py` was structured in such a way that a non-existent file would lead to a `OSError` exception at runtime. For that
  reason the iteration control that calls `check_vulns()` was moved into the
   conditional statement defined in the main function.
@@ -68,8 +70,8 @@ user@host:~/DIR$ source venv/bin/activate
 - `chapter02/ssh_brute.py` imported `pxssh` as a standalone library, but in
  fact it is a module under the `pexpect` library. The bug led to a
   `ModuleNotFoundError` and has been corrected. The code itself as presented in the
-   book is littered with indentation errors that make it unusable. Such
-    problems have also been corrected. 
+   book was littered with indentation errors that made it unusable and has 
+    been brought to a functioning state. 
 - `chapter02/ssh_brutekey.py` required a number of pre-generated keys to work; 
 furthermore the book points the reader to acquire such keys in a URL
  that currently returns a 403 response. Because of that a compressed archive
