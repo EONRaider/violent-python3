@@ -95,8 +95,8 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     tgt_hosts = str(args.tgt_hosts).split(',')
-    pass_file = args.pass_file
-    redirect_html = args.redirect_html
+    redirect_html = args.r
+    pass_file = args.f
 
     for tgt_host in tgt_hosts:
         user, passwd = None, None
