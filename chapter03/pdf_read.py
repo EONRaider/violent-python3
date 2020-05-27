@@ -7,8 +7,8 @@ def print_meta(filename):
         pdf_file = PdfFileReader(pdf)
         doc_info = pdf_file.getDocumentInfo()
         print(f'[*] PDF MetaData For: {str(filename)}')
-        for metaItem in doc_info:
-            print(f'[+] {metaItem}: {doc_info[metaItem]}')
+        for meta_item in doc_info:
+            print(f'[+] {meta_item}: {doc_info[meta_item]}')
 
 
 if __name__ == '__main__':
