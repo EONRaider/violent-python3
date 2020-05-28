@@ -19,9 +19,12 @@ def wigle_print(username, password, netid):
     net_info.raise_for_status()
     response = net_info.json()
 
-    map_lat = response['results'][0]['trilat']
-    map_lon = response['results'][0]['trilong']
-    print(f'[-] Lat: {map_lat}, Lon: {map_lon}')
+    try:
+        map_lat = response['results'][0]['trilat']
+        map_lon = response['results'][0]['trilong']
+        print(f'[-] Lat: {map_lat}, Lon: {map_lon}')
+    except KeyError:
+        print(f"   [-] {response['message']}")
 
 
 def print_nets(username, password):
@@ -42,15 +45,15 @@ def print_nets(username, password):
             winreg.CloseKey(net_key)
         except IndexError:
             break
+        except OSError as e:
+            print(f'   [-] Exception: {e}')
+            break
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         usage='python3 discover_networks.py -u WIGLE_USERNAME '
-              '-p WIGLE_PASSWORD\n'
-              'Get your API credentials at https://wigle.net/account\n'
-              'Use your API Name as the WIGLE_USERNAME and the API Token as '
-              'the WIGLE_PASSWORD arguments')
+              '-p WIGLE_PASSWORD')
     parser.add_argument('-u', type=str, metavar='WIGLE_USERNAME', required=True,
                         help='specify WiGLE username')
     parser.add_argument('-p', type=str, metavar='WIGLE_PASSWORD', required=True,
