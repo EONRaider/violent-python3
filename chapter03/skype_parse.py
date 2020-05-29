@@ -65,7 +65,7 @@ def print_messages(skype_db):
                         msg_direction = f'From {str(row[2])}: '
                     print(f'Time: {str(row[0])} {msg_direction} {str(row[3])}')
             except Exception as e:
-                print(f'[-] Exception: {e}')
+                print(f'[-] Exception: {e.__class__.__name__}')
                 pass
 
 
