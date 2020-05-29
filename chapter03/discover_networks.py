@@ -13,6 +13,12 @@ def val2addr(val):
 
 
 def wigle_print(username, password, netid):
+    """ This function is not part of the original code of Violent 
+    Python. It used the deprecated 'mechanize' module to perform
+    the same task. A new solution using the API to the WiGLE
+    service has been implemented here by EONRaider.
+    https://github.com/EONRaider"""
+
     url = "https://api.wigle.net/api/v2/network/detail"
     net_info = requests.get(url, auth=(username, password),
                             params=netid)
