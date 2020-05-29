@@ -5,29 +5,29 @@ import sqlite3
 
 
 def print_downloads(download_db):
-    conn = sqlite3.connect(download_db)
-    c = conn.cursor()
-    c.execute("SELECT name, source, datetime(endTime/1000000, 'unixepoch') "
-              "FROM moz_downloads;")
-    print('\n[*] -- Files Downloaded -- ')
-    for row in c:
-        print(f'   [+] File: {str(row[0])} from source: '
-              f'{str(row[1])} at: {str(row[2])}')
+    with sqlite3.connect(download_db) as conn:
+        c = conn.cursor()
+        c.execute("SELECT name, source, datetime(endTime/1000000, 'unixepoch') "
+                  "FROM moz_downloads;")
+        print('\n[*] -- Files Downloaded -- ')
+        for row in c:
+            print(f'   [+] File: {str(row[0])} from source: '
+                  f'{str(row[1])} at: {str(row[2])}')
 
 
 def print_cookies(cookies_db):
     try:
-        conn = sqlite3.connect(cookies_db)
-        c = conn.cursor()
-        c.execute('SELECT host, name, value FROM moz_cookies')
+        with sqlite3.connect(cookies_db) as conn:
+            c = conn.cursor()
+            c.execute('SELECT host, name, value FROM moz_cookies')
 
-        print('\n[*] -- Found Cookies --')
+            print('\n[*] -- Found Cookies --')
 
-        for row in c:
-            host = str(row[0])
-            name = str(row[1])
-            value = str(row[2])
-            print(f'   [+] Host: {host}, Cookie: {name}, Value: {value}')
+            for row in c:
+                host = str(row[0])
+                name = str(row[1])
+                value = str(row[2])
+                print(f'   [+] Host: {host}, Cookie: {name}, Value: {value}')
 
     except Exception as e:
         if 'encrypted' in str(e):
@@ -37,18 +37,19 @@ def print_cookies(cookies_db):
 
 def print_history(places_db):
     try:
-        conn = sqlite3.connect(places_db)
-        c = conn.cursor()
-        c.execute("select url, datetime(visit_date/1000000, 'unixepoch') "
-                  "from moz_places, moz_historyvisits where visit_count > 0 "
-                  "and moz_places.id==moz_historyvisits.place_id;")
+        with sqlite3.connect(places_db) as conn:
+            c = conn.cursor()
+            c.execute("select url, datetime(visit_date/1000000, 'unixepoch') "
+                      "from moz_places, moz_historyvisits where "
+                      "visit_count > 0 "
+                      "and moz_places.id==moz_historyvisits.place_id;")
 
-        print('\n[*] -- Found History --')
+            print('\n[*] -- Found History --')
 
-        for row in c:
-            url = str(row[0])
-            date = str(row[1])
-            print(f'   [+] {date} - Visited: {url}')
+            for row in c:
+                url = str(row[0])
+                date = str(row[1])
+                print(f'   [+] {date} - Visited: {url}')
 
     except Exception as e:
         if 'encrypted' in str(e):
@@ -57,23 +58,23 @@ def print_history(places_db):
 
 
 def print_google(places_db):
-    conn = sqlite3.connect(places_db)
-    c = conn.cursor()
-    c.execute("select url, datetime(visit_date/1000000, 'unixepoch') "
-              "from moz_places, moz_historyvisits where visit_count > 0 "
-              "and moz_places.id==moz_historyvisits.place_id;")
+    with sqlite3.connect(places_db) as conn:
+        c = conn.cursor()
+        c.execute("select url, datetime(visit_date/1000000, 'unixepoch') "
+                  "from moz_places, moz_historyvisits where visit_count > 0 "
+                  "and moz_places.id==moz_historyvisits.place_id;")
 
-    print('\n[*] -- Found Google --')
+        print('\n[*] -- Found Google --')
 
-    for row in c:
-        url = str(row[0])
-        date = str(row[1])
-        if 'google' in url.lower():
-            r = re.findall(r'q=.*', url)
-            if r:
-                search = r[0].split('&')[0]
-                search = search.replace('q=', '').replace('+', ' ')
-                print(f'[+] {date} - Searched For: {search}')
+        for row in c:
+            url = str(row[0])
+            date = str(row[1])
+            if 'google' in url.lower():
+                r = re.findall(r'q=.*', url)
+                if r:
+                    search = r[0].split('&')[0]
+                    search = search.replace('q=', '').replace('+', ' ')
+                    print(f'[+] {date} - Searched For: {search}')
 
 
 if __name__ == "__main__":
