@@ -37,13 +37,18 @@ user@host:~/DIR$ source venv/bin/activate
   mandatory for the execution of scripts but were treated as optional in the
    original code are now implemented as positional. A *usage* prompt is now
     available for all scripts that use `argparse` by supplying a -h argument to
-     the CLI.
+     the CLI. Leaving the responsibilities of both boundary and controller
+      object to the CLI parser is definitely not the best choice in terms
+       of software architecture, but was left as-is due to the
+        necessity of conformity to the original coder's intent.
 - All occurrences of `PEP 8: E722 do not use bare except` violations have
  been refactored with more specific exception clauses.
-- The author has a habit of opening files and leaving them in this state
- instead of calling the `close()` method on the open file object. For this
-  reason all instances of file manipulation have been refactored by using
-   context managers.
+- The author has a habit of opening files/databases and leaving them in this
+ state
+ instead of calling the `close()` method on the open file/database objects. For
+  this
+  reason all instances of file and database manipulation have been refactored by
+   using context managers.
 - Though completely inadequate from the
      perspective of best-practices, the use of global variables was left
       untouched in preference to producing heavy deviations from the original
@@ -83,6 +88,37 @@ furthermore the book points the reader to acquire such keys in a URL
    botnet and issues its commands was organized under the `__main__` execution 
    scope for the sake of standardization. The two commands issued to the bots
     have been unified to avoid an unnecessary number of return statements.
+- `chapter02/conficker.py` removed unused call to `sys` module.
+- `chapter03/discover_networks.py` had to be reimplemented instead of just
+ refactored. It originally not only used the deprecated `mechanize` module but
+  also interacted with the WiGLE service in a way that is no longer necessary, 
+  once WiGLE now provides an API. For that reason the code has been standardized
+    and a new `wigle_print` function was implemented by using the `requests
+    ` module to send an authenticated HTTP GET request to WiGLE. The
+     response returns a JSON object that can be directly accessed, making
+      the use of the `re` module also unnecessary. Exception handling was
+       added to make the script capable of dealing with error response
+        messages sent by the API. Notice that
+     this script depends on `winreg`, which only runs on Python installations
+      under the Microsoft Windows OS, and requires Administrator privileges
+       during execution for access to the Registry keys. An account has to be 
+       registered on https://wigle.net/account for access to the API.
+- `chapter03/pdf_read.py` now uses the `PyPDF4` module instead of the
+ deprecated `PyPDF`. The book refers to a specific PDF file in the text and
+  it has been added to the `chapter03` subdirectory.
+- `chapter03/exif_fetch.py` required a `features="html.parser"` argument on
+ the call to the `BeautifulSoup` object constructor. It was added on line 15
+ . This script only works on web applications that wrap images between `img
+ ` HTML tags (a rare practice on modern web applications that rely heavily on
+  JavaScript).
+- `chapter03/skype_parse.py` uses the `main.db` file as an example. It has been
+ added to the `chapter03/skype_profile` subdirectory for convenience.
+- `chapter03/firefox_parse.py` uses several `.sqlite` files as examples. They 
+ have been added to the `chapter03/firefox_profile` subdirectory for
+  convenience.
+- `chapter03/iphone_messages.py` references iPhone backup files that were not
+ made available by the author. Because of this the code has been refactored
+  but remains untested.
 
 ## Contributing
 
