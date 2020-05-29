@@ -14,7 +14,7 @@ def val2addr(val):
 
 def wigle_print(username, password, netid):
     """ This function is not part of the original code of Violent 
-    Python. It used the deprecated 'mechanize' module to perform
+    Python. It used the deprecated 'mechanize' library to perform
     the same task. A new solution using the API to the WiGLE
     service has been implemented here by EONRaider.
     https://github.com/EONRaider"""
