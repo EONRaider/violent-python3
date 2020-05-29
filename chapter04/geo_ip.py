@@ -3,6 +3,12 @@ import geoip2.database
 
 
 def print_record(target_ip):
+    """ This function is not part of the original code of Violent
+    Python. It used the deprecated 'pygeoip' library to perform
+    the same task. A new solution using the API to the database
+    provided by the MaxMind service has been implemented here by
+    EONRaider. https://github.com/EONRaider"""
+
     with geoip2.database.Reader('geolite2_city.mmdb') as gi:
         rec = gi.city(target_ip)
 
