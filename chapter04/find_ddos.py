@@ -17,7 +17,7 @@ def findDownload(pcap):
             if http.method == 'GET':
                 uri = http.uri.lower()
                 if '.zip' in uri and 'loic' in uri:
-                    print '[!] ' + src + ' Downloaded LOIC.'
+                    print('[!] ' + src + ' Downloaded LOIC.')
         except:
             pass
 
@@ -34,12 +34,12 @@ def findHivemind(pcap):
             sport = tcp.sport
             if dport == 6667:
                 if '!lazor' in tcp.data.lower():
-                    print '[!] DDoS Hivemind issued by: '+src
-                    print '[+] Target CMD: ' + tcp.data
+                    print('[!] DDoS Hivemind issued by: '+src)
+                    print('[+] Target CMD: ' + tcp.data)
             if sport == 6667:
                 if '!lazor' in tcp.data.lower():
-                    print '[!] DDoS Hivemind issued to: '+src
-                    print '[+] Target CMD: ' + tcp.data
+                    print('[!] DDoS Hivemind issued to: '+src)
+                    print('[+] Target CMD: ' + tcp.data)
         except:
             pass
 
@@ -56,7 +56,7 @@ def findAttack(pcap):
             dport = tcp.dport
             if dport == 80:
                 stream = src + ':' + dst
-                if pktCount.has_key(stream):
+                if stream in pktCount:
                     pktCount[stream] = pktCount[stream] + 1
                 else:
                     pktCount[stream] = 1
@@ -68,8 +68,8 @@ def findAttack(pcap):
         if pktsSent > THRESH:
             src = stream.split(':')[0]
             dst = stream.split(':')[1]
-            print '[+] '+src+' attacked '+dst+' with ' \
-                + str(pktsSent) + ' pkts.'
+            print('[+] '+src+' attacked '+dst+' with ' \
+                + str(pktsSent) + ' pkts.')
 
 
 def main():
@@ -82,12 +82,12 @@ def main():
       help='specify threshold count ')
 
     (options, args) = parser.parse_args()
-    if options.pcapFile == None:
-        print parser.usage
+    if options.pcap == None:
+        print(parser.usage)
         exit(0)
     if options.thresh != None:
         THRESH = options.thresh
-    pcapFile = options.pcapFile
+    pcapFile = options.pcap
     f = open(pcapFile)
     pcap = dpkt.pcap.Reader(f)
     findDownload(pcap)
