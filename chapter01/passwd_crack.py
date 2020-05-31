@@ -15,15 +15,11 @@ def test_pass(crypt_pass):
     return
 
 
-def main():
+if __name__ == '__main__':
     pass_file = open('passwords.txt')
     for line in pass_file.readlines():
         if ':' in line:
             user = line.split(':')[0]
-            crypt_pass = line.split(':')[1].strip()
+            _crypt_pass = line.split(':')[1].strip()
             print(f'[*] Cracking Password For: {user}')
-            test_pass(crypt_pass)
-
-
-if __name__ == '__main__':
-    main()
+            test_pass(_crypt_pass)
