@@ -38,7 +38,7 @@ def print_pcap(pcap_file):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(usage='python3 geo_print PCAP_FILE')
-    parser.add_argument('pcap', type=str,
+    parser.add_argument('pcap', type=str, metavar='PCAP_FILE',
                         help='specify the name of the PCAP file')
     args = parser.parse_args()
     pcap = args.pcap
