@@ -32,7 +32,7 @@ def print_pcap(pcap_file):
             dst = socket.inet_ntoa(ip.dst)
             print(f'[+] Src: {ret_geo_str(src)} --> Dst: {ret_geo_str(dst)}')
         except Exception as e:
-            print(f'   [-] Exception: {e.__class__.__name__}')
+            print(f'{"":>3}[-] Exception: {e.__class__.__name__}')
             pass
 
 

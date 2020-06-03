@@ -19,8 +19,8 @@ def print_record(target_ip):
         long = rec.location.longitude
 
         print(f'[*] Target: {target_ip} Geo-located.')
-        print(f'   [+] {city}, {region}, {country}')
-        print(f'   [+] Latitude: {lat}, Longitude: {long}')
+        print(f'{"":>3}[+] {city}, {region}, {country}')
+        print(f'{"":>3}[+] Latitude: {lat}, Longitude: {long}')
 
 
 if __name__ == "__main__":
