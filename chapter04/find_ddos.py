@@ -1,29 +1,29 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
 import dpkt
-import optparse
+import argparse
 import socket
-THRESH = 1000
 
 
-def findDownload(pcap):
-    for (ts, buf) in pcap:
+def find_download(pcap):
+    for ts, buf in pcap:
         try:
             eth = dpkt.ethernet.Ethernet(buf)
             ip = eth.data
             src = socket.inet_ntoa(ip.src)
             tcp = ip.data
             http = dpkt.http.Request(tcp.data)
+
             if http.method == 'GET':
                 uri = http.uri.lower()
                 if '.zip' in uri and 'loic' in uri:
-                    print('[!] ' + src + ' Downloaded LOIC.')
-        except:
+                    print(f'[!] {src} downloaded LOIC.')
+
+        except Exception as e:
+            print(f'[-] Exception: {e.__class__.__name__}')
             pass
 
 
-def findHivemind(pcap):
-    for (ts, buf) in pcap:
+def find_hivemind(pcap):
+    for ts, buf in pcap:
         try:
             eth = dpkt.ethernet.Ethernet(buf)
             ip = eth.data
@@ -32,21 +32,24 @@ def findHivemind(pcap):
             tcp = ip.data
             dport = tcp.dport
             sport = tcp.sport
-            if dport == 6667:
-                if '!lazor' in tcp.data.lower():
-                    print('[!] DDoS Hivemind issued by: '+src)
-                    print('[+] Target CMD: ' + tcp.data)
-            if sport == 6667:
-                if '!lazor' in tcp.data.lower():
-                    print('[!] DDoS Hivemind issued to: '+src)
-                    print('[+] Target CMD: ' + tcp.data)
-        except:
+
+            if dport == 6667 and b'!lazor' in tcp.data.lower():
+                print(f'[!] DDoS Hivemind issued by: {src}')
+                print(f'{"":>3}[+] Target CMD: {tcp.data.decode("utf-8")}')
+
+            if sport == 6667 and b'!lazor' in tcp.data.lower():
+                print(f'[!] DDoS Hivemind issued to: {dst}')
+                print(f'{"":>3}[+] Target CMD: {tcp.data.decode("utf-8")}')
+
+        except Exception as e:
+            print(f'[-] Exception: {e.__class__.__name__}')
             pass
 
 
-def findAttack(pcap):
-    pktCount = {}
-    for (ts, buf) in pcap:
+def find_attack(pcap):
+    pkt_count = {}
+
+    for ts, buf in pcap:
         try:
             eth = dpkt.ethernet.Ethernet(buf)
             ip = eth.data
@@ -54,46 +57,40 @@ def findAttack(pcap):
             dst = socket.inet_ntoa(ip.dst)
             tcp = ip.data
             dport = tcp.dport
+
             if dport == 80:
-                stream = src + ':' + dst
-                if stream in pktCount:
-                    pktCount[stream] = pktCount[stream] + 1
+                stream = f'{src}:{dst}'
+                if stream in pkt_count:
+                    pkt_count[stream] = pkt_count[stream] + 1
                 else:
-                    pktCount[stream] = 1
-        except:
+                    pkt_count[stream] = 1
+
+        except Exception as e:
+            print(f'[-] Exception: {e.__class__.__name__}')
             pass
 
-    for stream in pktCount:
-        pktsSent = pktCount[stream]
-        if pktsSent > THRESH:
+    for stream in pkt_count:
+        pkts_sent = pkt_count[stream]
+        if pkts_sent > THRESH:
             src = stream.split(':')[0]
             dst = stream.split(':')[1]
-            print('[+] '+src+' attacked '+dst+' with ' \
-                + str(pktsSent) + ' pkts.')
-
-
-def main():
-    parser = optparse.OptionParser("usage %prog '+\
-      '-p <pcap file> -t <thresh>"
-                              )
-    parser.add_option('-p', dest='pcapFile', type='string',\
-      help='specify pcap filename')
-    parser.add_option('-t', dest='thresh', type='int',\
-      help='specify threshold count ')
-
-    (options, args) = parser.parse_args()
-    if options.pcap == None:
-        print(parser.usage)
-        exit(0)
-    if options.thresh != None:
-        THRESH = options.thresh
-    pcapFile = options.pcap
-    f = open(pcapFile)
-    pcap = dpkt.pcap.Reader(f)
-    findDownload(pcap)
-    findHivemind(pcap)
-    findAttack(pcap)
+            print(f'[+] {src} attacked {dst} with {str(pkts_sent)} packets.')
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(
+        usage='python3 find_ddos.py PCAP_FILE [-t THRESH]')
+    parser.add_argument('pcap_file', type=str, metavar='PCAP_FILE',
+                        help='specify the name of the pcap file')
+    parser.add_argument('-t', type=int, metavar='THRESH', default=1000,
+                        help='specify threshold count ')
+
+    args = parser.parse_args()
+    pcap_file = args.pcap_file
+    THRESH = args.t
+
+    with open(pcap_file, 'rb') as file:
+        _pcap = dpkt.pcap.Reader(file)
+        find_download(_pcap)
+        find_hivemind(_pcap)
+        find_attack(_pcap)
