@@ -1,5 +1,5 @@
 import argparse
-from scapy.all import sr1, sniff
+from scapy.all import sr1, sniff, conf
 from scapy.layers.inet import IP, ICMP
 from IPy import IP as IPTEST
 
@@ -39,6 +39,7 @@ if __name__ == '__main__':
                         help='specify the threshold count')
 
     args = parser.parse_args()
+    conf.iface = args.i
     THRESH = args.t
 
     sniff(prn=test_TTL, store=0)
