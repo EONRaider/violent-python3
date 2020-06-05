@@ -3,7 +3,7 @@
 Source code for the book "Violent Python" by TJ O'Connor. The code has been
  fully converted to Python 3, reformatted to comply with PEP8 standards and 
  refactored to eliminate issues involving the implementation of deprecated
-  modules.
+  libraries.
 
 *A conversion similar to this one has been made available by myself on the
  source code of the book "Black Hat Python", by Justin Seitz. Check it out
@@ -31,7 +31,7 @@ user@host:~/DIR$ source venv/bin/activate
   more modern standard.
 - Names of files, variables, functions, classes and methods now conform to
  PEP 8 naming standards.
-- The now deprecated `optparse` module has been replaced for `argparse
+- The now deprecated `optparse` library has been replaced for `argparse
 ` throughout the entire source code. All argument parsing is now contained
  under the `__main__` execution scope for each file. All CLI arguments that were
   mandatory for the execution of scripts but were treated as optional in the
@@ -61,7 +61,7 @@ Files not listed below can be assumed to have been refactored in one way or
  reason the iteration control that calls `check_vulns()` was moved into the
   conditional statement defined in the main function.
 - `chapter02/nmap_scan.py` implemented a main function solely for the purpose
- of calling the deprecated `optparse` module, which has been replaced by
+ of calling the deprecated `optparse` library, which has been replaced by
   `argparse`. Because of that the main function was removed. An iteration
    control structure that was part of the `optparse` call in the original
     code was implemented in such a way that a new call to nmap was executed
@@ -73,7 +73,7 @@ Files not listed below can be assumed to have been refactored in one way or
    changed. The returning prompt information was originally encoded and now
     has been decoded in order to afford better readability.
 - `chapter02/ssh_brute.py` imported `pxssh` as a standalone library, but in
- fact it is a module under the `pexpect` library. The bug led to a
+ fact it is a library under the `pexpect` library. The bug led to a
   `ModuleNotFoundError` and has been corrected. The code itself as presented in the
    book was littered with indentation errors that made it unusable and has 
     been brought to a functioning state. 
@@ -88,28 +88,28 @@ furthermore the book points the reader to acquire such keys in a URL
    botnet and issues its commands was organized under the `__main__` execution 
    scope for the sake of standardization. The two commands issued to the bots
     have been unified to avoid an unnecessary number of return statements.
-- `chapter02/conficker.py` removed unused call to `sys` module.
+- `chapter02/conficker.py` removed unused call to `sys` library.
 - `chapter03/discover_networks.py` had to be reimplemented instead of just
- refactored. It originally not only used the deprecated `mechanize` module but
+ refactored. It originally not only used the deprecated `mechanize` library but
   also interacted with the WiGLE service in a way that is no longer necessary, 
   once WiGLE now provides an API. For that reason the code has been standardized
     and a new `wigle_print` function was implemented by using the `requests
-    ` module to send an authenticated HTTP GET request to WiGLE. The
+    ` library to send an authenticated HTTP GET request to WiGLE. The
      response returns a JSON object that can be directly accessed, making
-      the use of the `re` module also unnecessary. Exception handling was
+      the use of the `re` library also unnecessary. Exception handling was
        added to make the script capable of dealing with error response
         messages sent by the API. Notice that
      this script depends on `winreg`, which only runs on Python installations
       under the Microsoft Windows OS, and requires Administrator privileges
        during execution for access to the Registry keys. An account has to be 
        registered on https://wigle.net/account for access to the API.
-- `chapter03/pdf_read.py` now uses the `PyPDF4` module instead of the
+- `chapter03/pdf_read.py` now uses the `PyPDF4` library instead of the
  deprecated `PyPDF`. The book refers to a specific PDF file in the text and
   it has been added to the `chapter03` subdirectory.
 - `chapter03/exif_fetch.py` required a `features="html.parser"` argument on
  the call to the `BeautifulSoup` object constructor. It was added on line 15
- . This script only works on web applications that wrap images between `img
- ` HTML tags (a rare practice on modern web applications that rely heavily on
+ . This script only works on web applications that wrap images between `img`
+  HTML tags (a rare practice on modern web applications that rely heavily on
   JavaScript).
 - `chapter03/skype_parse.py` uses the `main.db` file as an example. It has been
  added to the `chapter03/skype_profile` subdirectory for convenience.
@@ -119,6 +119,38 @@ furthermore the book points the reader to acquire such keys in a URL
 - `chapter03/iphone_messages.py` references iPhone backup files that were not
  made available by the author. Because of this the code has been refactored
   but remains untested.
+- `chapter04/geo_ip.py` used the deprecated `pygeoip` library. As 
+[suggested](https://github.com/appliedsec/pygeoip) by its creator, 
+`geoip2` should now be used. An attempt was made to keep the newly
+  implemented code as similar as possible to the original implementation on
+   the book, but some changes had to be made to accommodate the new package
+    structure of `geoip2` and its attributes. The database file necessary to
+     run the script was downloaded from 
+     [MaxMind](https://dev.maxmind.com/geoip/geoip2/downloadable/) and made
+      available in the `chapter04` directory. A CLI was also implemented
+     using `argparse`.
+- `chapter04/print_direction.py` raised a `UnicodeDecodeError` exception when
+ opening the file in the original implementation. It has been fixed by adding
+  a *rb* argument to the context manager handling the file.
+- `chapter04/find_ddos.py` printed the source address of the Hivemind
+ attack as its destination, making the output useless. The correct *dst* 
+ variable is now  displayed on stdout. The book references a file called
+  `traffic.pcap` that was not made available by the author, so the code has
+   been refactored but remains untested.
+- `chapter04/spoof_detect.py` references a non-existent *conf* object in its
+ original CLI. This object is supposed to set the network interface name as the
+  value for its *iface* attribute but its unused in the code. The new CLI
+   implemented leaves the *-i* argument as optional but has no effect in the
+    code as it is.
+- `chapter04/test_domain_flux.py` returns that zero unanswered requests were
+ made when analyzing the pcap file provided by the author. For some reason
+  the packets themselves don't have the DNS Resource Record field value set,
+  so the condition in the *dns_QR_test* function always evaluates as false. 
+  That being the case, the condition evaluating the DNSRR field has been removed
+   from the
+   conditional statement and all UDP packets that have port 53 as their
+    source are now analysed. It does result in less efficient code but at
+     least it outputs the results as intended in the book.
 
 ## Contributing
 
