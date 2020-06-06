@@ -19,7 +19,7 @@ def ret_geo_str(ip):
             return f'{city}, {country}' if city else country
 
     except Exception as e:
-        print(f'[-] Exception: {e.__class__.__name__}')
+        print(f'{"":>3}[-] Exception: {e.__class__.__name__}')
         return 'Unregistered'
 
 

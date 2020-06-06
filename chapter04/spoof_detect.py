@@ -26,7 +26,7 @@ def test_TTL(pkt):
             ttl = str(pkt.ttl)
             check_TTL(ipsrc, ttl)
     except Exception as e:
-        print(f'[-] Exception: {e.__class__.__name__}')
+        print(f'{"":>3}[-] Exception: {e.__class__.__name__}')
         pass
 
 

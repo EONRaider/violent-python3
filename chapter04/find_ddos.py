@@ -42,7 +42,7 @@ def find_hivemind(pcap):
                 print(f'{"":>3}[+] Target CMD: {tcp.data.decode("utf-8")}')
 
         except Exception as e:
-            print(f'[-] Exception: {e.__class__.__name__}')
+            print(f'{"":>3}[-] Exception: {e.__class__.__name__}')
             pass
 
 
@@ -66,7 +66,7 @@ def find_attack(pcap):
                     pkt_count[stream] = 1
 
         except Exception as e:
-            print(f'[-] Exception: {e.__class__.__name__}')
+            print(f'{"":>3}[-] Exception: {e.__class__.__name__}')
             pass
 
     for stream in pkt_count:
