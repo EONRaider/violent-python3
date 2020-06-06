@@ -11,7 +11,7 @@ def sid_to_user(sid):
         user = value.split('\\')[-1]
         return user
     except Exception as e:
-        print(f'[-] Exception: {e}')
+        print(f'{"":>3}[-] Exception: {e}')
         return sid
 
 

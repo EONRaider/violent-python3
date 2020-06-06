@@ -43,7 +43,7 @@ def test_for_exif(img_filename):
             if exif_gps:
                 print(f'[*] {img_filename} contains GPS MetaData')
     except Exception as e:
-        print(f'   [-] No {e} found')
+        print(f'{"":>3}[-] No {e} found')
         pass
 
 

@@ -30,7 +30,7 @@ def wigle_print(username, password, netid):
         map_lon = response['results'][0]['trilong']
         print(f'[-] Lat: {map_lat}, Lon: {map_lon}')
     except KeyError:
-        print(f"   [-] {response['message']}")
+        print(f'{"":>3}[-] {response["message"]}')
 
 
 def print_nets(username, password):
@@ -52,7 +52,7 @@ def print_nets(username, password):
         except IndexError:
             break
         except OSError as e:
-            print(f'   [-] Exception: {e}')
+            print(f'{"":>3}[-] Exception: {e}')
             break
 
 

@@ -11,7 +11,7 @@ def print_downloads(download_db):
                   "FROM moz_downloads;")
         print('\n[*] -- Files Downloaded -- ')
         for row in c:
-            print(f'   [+] File: {str(row[0])} from source: '
+            print(f'{"":>3}[+] File: {str(row[0])} from source: '
                   f'{str(row[1])} at: {str(row[2])}')
 
 
@@ -27,12 +27,12 @@ def print_cookies(cookies_db):
                 host = str(row[0])
                 name = str(row[1])
                 value = str(row[2])
-                print(f'   [+] Host: {host}, Cookie: {name}, Value: {value}')
+                print(f'{"":>3}[+] Host: {host}, Cookie: {name}, Value: {value}')
 
     except Exception as e:
         if 'encrypted' in str(e):
-            print('\n   [*] Error reading your cookies database.'
-                  '   [*] Upgrade your Python-Sqlite3 Library')
+            print(f'\n{"":>3}[*] Error reading your cookies database.'
+                  f'{"":>3}[*] Upgrade your Python-Sqlite3 Library')
 
 
 def print_history(places_db):
@@ -49,12 +49,12 @@ def print_history(places_db):
             for row in c:
                 url = str(row[0])
                 date = str(row[1])
-                print(f'   [+] {date} - Visited: {url}')
+                print(f'{"":>3}[+] {date} - Visited: {url}')
 
     except Exception as e:
         if 'encrypted' in str(e):
-            print('\n   [*] Error reading your places database.'
-                  '   [*] Upgrade your Python-Sqlite3 Library')
+            print(f'\n{"":>3}[*] Error reading your places database.'
+                  f'{"":>3}[*] Upgrade your Python-Sqlite3 Library')
 
 
 def print_google(places_db):
