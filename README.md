@@ -53,6 +53,17 @@ user@host:~/DIR$ source venv/bin/activate
      perspective of best-practices, the use of global variables was left
       untouched in preference to producing heavy deviations from the original
        code's logic.
+- The code included in Chapter 5 of the book has been refactored even though in
+ practical terms it can be, at best, historical. Much of its functionality
+  depends not only on very specific cases outlined as examples by the author
+   but also exploit vulnerabilities that ceased to be realistic in the last
+    few years (such as sniffing traffic from 802.11 wireless networks that
+     still rely on the WEP security algorithm for traffic encryption or, worst, that 
+     maintain no security at all) or the absurd expectation of acquisition of a
+      specific UAV model by the reader if he intends to see the code at work. 
+      To avoid stating straight away that the effort required for reading this
+       chapter is nearly useless, I might add that some utility can be
+      extracted from the code related to the sniffing of probing and beacon requests, though.
 
 ## Refactoring
 Files not listed below can be assumed to have been refactored in one way or
@@ -65,8 +76,8 @@ Files not listed below can be assumed to have been refactored in one way or
   `argparse`. Because of that the main function was removed. An iteration
    control structure that was part of the `optparse` call in the original
     code was implemented in such a way that a new call to nmap was executed
-     for each port scanned. The iteration was moved into the `nmap_scan
-     ` function in order to prevent wasting cycles.
+     for each port scanned. The iteration was moved into the `nmap_scan` 
+     function to prevent wasting cycles.
 - `chapter02/ssh_command.py` had its initialization code moved into the
  `__main__` execution scope. The names of variables used in the outer scope
   that used to conflict with the names of parameters of functions were
@@ -137,11 +148,6 @@ furthermore the book points the reader to acquire such keys in a URL
  variable is now  displayed on stdout. The book references a file called
   `traffic.pcap` that was not made available by the author, so the code has
    been refactored but remains untested.
-- `chapter04/spoof_detect.py` references a non-existent *conf* object in its
- original CLI. This object is supposed to set the network interface name as the
-  value for its *iface* attribute but its unused in the code. The new CLI
-   implemented leaves the *-i* argument as optional but has no effect in the
-    code as it is.
 - `chapter04/test_domain_flux.py` returns that zero unanswered requests were
  made when analyzing the pcap file provided by the author. For some reason
   the packets themselves don't have the DNS Resource Record field value set,
@@ -151,6 +157,24 @@ furthermore the book points the reader to acquire such keys in a URL
    conditional statement and all UDP packets that have port 53 as their
     source are now analysed. It does result in less efficient code but at
      least it outputs the results as intended in the book.
+- `chapter05/blue_bug.py` uses the `PyBluez` library, which in turn requests the
+`BlueZ` library and header files as stated in its 
+[installation instructions](https://github.com/pybluez/pybluez/blob/master/docs/install.rst).
+These dependencies must be installed prior to installing `PyBluez` as a
+ requirement. In Linux this can be performed by issuing the command 
+ `apt install bluetooth libbluetooth-dev`. The original code references a 
+ non-existent `client_sock` object that has been replaced by `phone_sock`.
+- `chapter05/__init__.py` and `chapter06/__init__.py` were added to enable
+ the importing of modules from `chapter05/dup.py` and `chapter06/anon_browser.py`, 
+ respectively.
+- `chapter05/ftp_sniff.py` had a logic flaw that made it present a sniffed
+ username but no password due to poor implementation of a `if... else` 
+ statement. It has been corrected by replacing the conditional statement with
+  a nested `if` clause.
+- `chapter05/ninja_print.py` requires the `obexftp` library to work. This
+ library was written for Python 2 and has not been ported 
+  or replaced by an equivalent one to the present date, so the code remains
+   as written by the author in its Python 2 version.
 
 ## Contributing
 
