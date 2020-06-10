@@ -64,6 +64,10 @@ user@host:~/DIR$ source venv/bin/activate
       To avoid stating straight away that the effort required for reading this
        chapter is nearly useless, I might add that some utility can be
       extracted from the code related to the sniffing of probing and beacon requests, though.
+- The code on Chapter 6 that makes reference to Google and Twitter proved
+   too outdated in the way they handle with current APIs to be worth the
+    trouble of refactoring. If you're interested in dealing with them, 
+    perform the refactoring and issue a pull request to this repository.
 
 ## Refactoring
 Files not listed below can be assumed to have been refactored in one way or
@@ -164,9 +168,6 @@ These dependencies must be installed prior to installing `PyBluez` as a
  requirement. In Linux this can be performed by issuing the command 
  `apt install bluetooth libbluetooth-dev`. The original code references a 
  non-existent `client_sock` object that has been replaced by `phone_sock`.
-- `chapter05/__init__.py` and `chapter06/__init__.py` were added to enable
- the importing of modules from `chapter05/dup.py` and `chapter06/anon_browser.py`, 
- respectively.
 - `chapter05/ftp_sniff.py` had a logic flaw that made it present a sniffed
  username but no password due to poor implementation of a `if... else` 
  statement. It has been corrected by replacing the conditional statement with
@@ -175,6 +176,19 @@ These dependencies must be installed prior to installing `PyBluez` as a
  library was written for Python 2 and has not been ported 
   or replaced by an equivalent one to the present date, so the code remains
    as written by the author in its Python 2 version.
+- `chapter05/__init__.py` and `chapter06/__init__.py` were added to enable
+ the importing of modules from `chapter05/dup.py` and `chapter06/anon_browser.py`, 
+ respectively.
+ - `chapter06/anon_proxy.py` was re-implemented with the `MechanicalSoup` 
+ Python 3 library. It integrates the modifications that were necessary to
+  `proxy_test.py`, `useragent_test.py` and `print_cookies.py`.
+- `chapter06/anon_browser.py` was also re-implemented with `MechanicalSoup
+` and went through some modifications in the code. The `cookielib` library
+ was replaced by `http.cookiejar` in the constructor method for the
+  *AnonBrowser* class and the parameter *user_agents* now accepts a list of
+   strings instead of a tuple.
+- `chapter06/link_parser.py` was refactored by using new ways to handle the
+ implementations of `re` and `bs4`.
 
 ## Contributing
 
