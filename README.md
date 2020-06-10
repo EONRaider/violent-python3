@@ -61,11 +61,11 @@ user@host:~/DIR$ source venv/bin/activate
      still rely on the WEP security algorithm for traffic encryption or, worst, that 
      maintain no security at all) or the absurd expectation of acquisition of a
       specific UAV model by the reader if he intends to see the code at work. 
-      To avoid stating straight away that the effort required for reading this
-       chapter is nearly useless, I might add that some utility can be
+      To avoid stating straight away that the effort invested in reading this
+       chapter is nearly pointless, I might add that some utility can be
       extracted from the code related to the sniffing of probing and beacon requests, though.
 - The code on Chapter 6 that makes reference to Google and Twitter proved
-   too outdated in the way they handle with current APIs to be worth the
+   too outdated in the way they handle current APIs to be worth the
     trouble of refactoring. If you're interested in dealing with them, 
     perform the refactoring and issue a pull request to this repository.
 
@@ -182,8 +182,8 @@ These dependencies must be installed prior to installing `PyBluez` as a
  - `chapter06/anon_proxy.py` was re-implemented with the `MechanicalSoup` 
  Python 3 library. It integrates the modifications that were necessary to
   `proxy_test.py`, `useragent_test.py` and `print_cookies.py`.
-- `chapter06/anon_browser.py` was also re-implemented with `MechanicalSoup
-` and went through some modifications in the code. The `cookielib` library
+- `chapter06/anon_browser.py` was also re-implemented with `MechanicalSoup` 
+and went through some modifications in the code. The `cookielib` library
  was replaced by `http.cookiejar` in the constructor method for the
   *AnonBrowser* class and the parameter *user_agents* now accepts a list of
    strings instead of a tuple.
