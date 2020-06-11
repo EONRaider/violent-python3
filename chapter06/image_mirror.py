@@ -10,13 +10,12 @@ def mirror_images(tgt_url, dest_dir):
     ab.open(tgt_url)
     html = str(ab.get_current_page())
     soup = BeautifulSoup(html, 'html.parser')
-    image_links = [link.get('src') for link in soup.find_all('img')]
-    images = soup.find_all('img')
+    image_tags = soup.find_all('img')
 
-    for image in image_links:
-        filename = os.path.join(dest_dir, image.lstrip('/'))
+    for image in image_tags:
+        filename = image['src'].lstrip('http://')
+        filename = os.path.join(dest_dir, filename.replace('/', '_'))
         data = ab.open(image['src']).read()
-        ab.back()
         with open(filename, 'wb') as save:
             print(f'[+] Saving {str(filename)}')
             save.write(data)
