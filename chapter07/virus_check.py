@@ -64,7 +64,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         usage='python3 virus_check.py FILENAME')
     parser.add_argument('filename', type=str, metavar='FILENAME',
-                        help='specify the nam of the file')
+                        help='specify the name of the file')
 
     args = parser.parse_args()
     _filename = args.filename
