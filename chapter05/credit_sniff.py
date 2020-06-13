@@ -10,11 +10,11 @@ def find_credit_card(pkt):
     visa_re = re.findall(r'4[0-9]{12}(?:[0-9]{3})?', raw)
 
     if america_re:
-        print('[+] Found American Express Card: ' + america_re[0])
+        print(f'[+] Found American Express Card: {america_re[0]}')
     if master_re:
-        print('[+] Found MasterCard Card: ' + master_re[0])
+        print(f'[+] Found MasterCard Card: {master_re[0]}')
     if visa_re:
-        print('[+] Found Visa Card: ' + visa_re[0])
+        print(f'[+] Found Visa Card: {visa_re[0]}')
 
 
 if __name__ == '__main__':
