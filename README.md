@@ -1,9 +1,6 @@
 # Python 3 "Violent Python" Source Code
 
-Source code for the book "Violent Python" by TJ O'Connor. The code has been
- fully converted to Python 3, reformatted to comply with PEP8 standards and 
- refactored to eliminate issues involving the implementation of deprecated
-  libraries.
+Source code for the book "Violent Python" by TJ O'Connor. The code has been fully converted to Python 3, reformatted to comply with PEP8 standards and refactored to eliminate dependency issues involving the implementation of deprecated libraries.
 
 *A conversion similar to this one has been made available by myself on the
  source code of the book "Black Hat Python", by Justin Seitz. Check it out
@@ -31,8 +28,8 @@ user@host:~/DIR$ source venv/bin/activate
   more modern standard.
 - Names of files, variables, functions, classes and methods now conform to
  PEP 8 naming standards.
-- The now deprecated `optparse` library has been replaced for `argparse
-` throughout the entire source code. All argument parsing is now contained
+- The now deprecated `optparse` library has been replaced for `argparse` 
+throughout the entire source code. All argument parsing is now contained
  under the `__main__` execution scope for each file. All CLI arguments that were
   mandatory for the execution of scripts but were treated as optional in the
    original code are now implemented as positional. A *usage* prompt is now
