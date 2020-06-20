@@ -46,6 +46,10 @@ throughout the entire source code. All argument parsing is now contained
   this
   reason all instances of file and database manipulation have been refactored by
    using context managers.
+- The use of comments making reference to the encoding to be used by the
+ interpreter (namely, `# -*- coding: utf-8 -*-`) was eliminated due to the
+  standardization of UTF-8 as the default encoding for Python 3 (replacing
+   ASCII from Python 2).
 - Though completely inadequate from the
      perspective of best-practices, the use of global variables was left
       untouched in preference to producing heavy deviations from the original
