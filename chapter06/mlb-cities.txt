@@ -14,7 +14,7 @@ arlington
 toronto
 phoenix
 atlanta
-chicao
+chicago
 cincinnati
 denver
 houston
