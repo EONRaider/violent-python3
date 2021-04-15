@@ -16,7 +16,7 @@ class AnonBrowser(mechanicalsoup.StatefulBrowser):
         self.user_agent = [] if user_agents is None else user_agents
         self.proxies = [] if proxies is None else proxies
         self.session.proxies = None
-        self.user_agents = self.user_agent + ['Mozilla/4.0 ', 'FireFox/6.01',
+        self.user_agents = self.user_agents + ['Mozilla/4.0 ', 'FireFox/6.01',
                                               'ExactSearch', 'Nokia7110/1.0']
         self.cookie_jar = http.cookiejar.CookieJar()
         self.set_cookiejar(self.cookie_jar)
