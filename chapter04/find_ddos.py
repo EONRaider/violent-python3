@@ -92,5 +92,10 @@ if __name__ == '__main__':
     with open(pcap_file, 'rb') as file:
         _pcap = dpkt.pcap.Reader(file)
         find_download(_pcap)
+    with open(pcap_file, 'rb') as file:
+        _pcap = dpkt.pcap.Reader(file)
         find_hivemind(_pcap)
+            
+    with open(pcap_file, 'rb') as file:
+        _pcap = dpkt.pcap.Reader(file)
         find_attack(_pcap)
