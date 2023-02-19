@@ -191,6 +191,10 @@ and went through some modifications in the code. The `cookielib` library
 - `chapter06/link_parser.py` was refactored by using new ways to handle the
  implementations of `re` and `bs4`.
 
+## Translations
+Contributions in other languages can be checked here:
+- Translated to [Turkish](https://github.com/EONRaider/violent-python3/tree/turkish-language) by [Bedirhan Budak](https://github.com/bedirhanbudak)
+
 ## Contributing
 
 As a matter of common sense, first try to discuss the change you wish to make to
