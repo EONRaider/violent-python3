@@ -4,11 +4,12 @@ All notable changes to this project are documented here. The format is based on
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Releases are tagged
 `vX.Y.Z`.
 
-## [Unreleased]
+## [2.1.0] - Unreleased
 
 First pass over the book code itself, verifying each chapter against the
 dependency ranges from 2.0.0 and fixing what no longer ran. Details are in
-[docs/CONVERSION_NOTES.md](docs/CONVERSION_NOTES.md).
+[docs/CONVERSION_NOTES.md](docs/CONVERSION_NOTES.md). This is a separate release
+from the 2.0.0 scaffolding pass, which changed no chapter code.
 
 ### Changed
 
@@ -27,8 +28,12 @@ dependency ranges from 2.0.0 and fixing what no longer ran. Details are in
 - chapter06 `anon_browser.py`: the `AnonBrowser` constructor raised
   `AttributeError` (it stored the user-agent pool under one name and read
   another), and `change_user_agent()` set an attribute MechanicalSoup ignores
-  instead of calling `set_user_agent()`. Both are fixed, so the class works
-  under MechanicalSoup 1.x.
+  instead of calling `set_user_agent()`. `change_proxy()` also set only the
+  `http` proxy scheme and left `requests`' `trust_env` on, so an `https` request
+  bypassed the chosen proxy (following `HTTPS_PROXY` or going out directly) and
+  leaked the real IP; it now routes both schemes through the proxy and disables
+  `trust_env`. All three are fixed, so the class anonymizes correctly under
+  MechanicalSoup 1.x.
 - Invalid escape sequences (a `SyntaxWarning`, an error on Python 3.12+) in
   `chapter02/ssh_command.py`, `chapter03/discover_networks.py` and
   `chapter03/dump_recyclebin.py` are now raw strings with identical values.
@@ -130,5 +135,5 @@ history. Notable items:
   passed to several functions.
 - Raised Pillow to 8.3.2 for security fixes.
 
-[Unreleased]: https://github.com/EONRaider/violent-python3/compare/v2.0.0...HEAD
+[2.1.0]: https://github.com/EONRaider/violent-python3/releases/tag/v2.1.0
 [2.0.0]: https://github.com/EONRaider/violent-python3/releases/tag/v2.0.0

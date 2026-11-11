@@ -215,9 +215,18 @@ validated on Linux / CPython 3.13 except where noted.
   constructor raised `AttributeError` because it assigned the agent pool to
   `self.user_agent` but read `self.user_agents`; the pool is now stored
   consistently. `change_user_agent()` set an inert attribute, so the rotated
-  agent never reached the request — it now calls `set_user_agent()`. The utility
-  scripts (`proxy_test.py`, `useragent_test.py`, `print_cookies.py`) use the
-  MechanicalSoup `StatefulBrowser` API directly, which is unchanged in 1.x.
+  agent never reached the request — it now calls `set_user_agent()`.
+  `change_proxy()` set only the `http` proxy scheme and left `requests`'
+  `trust_env` enabled, so an `https` request had no matching proxy entry and
+  fell through to the `HTTPS_PROXY` environment variable (or a direct
+  connection), bypassing the chosen proxy and leaking the real IP — the whole
+  point of the class. It now routes both the `http` and `https` schemes through
+  the chosen proxy and sets `session.trust_env = False` so no environment
+  variable can redirect or bypass it. Verified with `merge_environment_settings`
+  that an `https` fetch resolves to the chosen proxy even when a hostile
+  `HTTPS_PROXY` is exported. The utility scripts (`proxy_test.py`,
+  `useragent_test.py`, `print_cookies.py`) use the MechanicalSoup
+  `StatefulBrowser` API directly, which is unchanged in 1.x.
 - **chapter06 Google/Twitter scripts:** these target the Google AJAX Search API
   (shut down 2011) and the legacy `search.twitter.com` endpoint (removed ~2013).
   Both are permanently gone, so the scripts are kept for historical reference

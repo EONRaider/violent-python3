@@ -35,7 +35,14 @@ class AnonBrowser(mechanicalsoup.StatefulBrowser):
     def change_proxy(self):
         if self.proxies:
             random_proxy = random.choice(self.proxies)
-            self.session.proxies = {'http': random_proxy}
+            # Route BOTH http and https through the chosen proxy, and stop
+            # requests from consulting the HTTP(S)_PROXY environment variables
+            # (trust_env). Setting only the 'http' scheme, as the original did,
+            # left https requests with no proxy entry: trust_env then let an
+            # https fetch follow HTTPS_PROXY or go out directly, bypassing the
+            # chosen proxy and leaking the real IP.
+            self.session.trust_env = False
+            self.session.proxies = {'http': random_proxy, 'https': random_proxy}
 
     def anonymize(self, sleep=False):
         self.clear_cookies()
