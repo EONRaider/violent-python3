@@ -26,6 +26,12 @@ scapy = { dist = "scapy" }
 [external]
 obexftp = "ObexFTP Python 2 bindings (no Python 3 port)"
 
+# Known-broken imports: nothing installable provides them on the supported
+# Python versions. `check` prints a WARNING for each use on every run, and the
+# README chapter table marks them as unresolved. Remove an entry once the
+# book code is fixed.
+[unresolved]
+
 # Distributions intentionally declared in a group although no import maps to
 # them, keyed by group.
 [declared_without_import]
