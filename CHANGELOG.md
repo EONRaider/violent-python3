@@ -129,7 +129,6 @@ history. Notable items:
 - Fixed file positions not being reset between reads when one file object was
   passed to several functions.
 - Raised Pillow to 8.3.2 for security fixes.
-- Added the Turkish translation (`turkish-language` branch).
 
 [Unreleased]: https://github.com/EONRaider/violent-python3/compare/v2.0.0...HEAD
 [2.0.0]: https://github.com/EONRaider/violent-python3/releases/tag/v2.0.0
