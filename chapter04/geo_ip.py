@@ -3,7 +3,8 @@ import os
 import sys
 import geoip2.database
 
-DEFAULT_DB = 'geolite2_city.mmdb'
+DEFAULT_DB = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                          'geolite2_city.mmdb')
 DB_HELP = (
     "MaxMind's licence does not allow redistributing the GeoLite2 database, so it "
     "is no longer bundled with this repository. Create a free licence key at "
