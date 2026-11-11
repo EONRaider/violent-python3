@@ -22,7 +22,7 @@ Issues = "https://github.com/EONRaider/violent-python3/issues"
 Changelog = "https://github.com/EONRaider/violent-python3/blob/master/CHANGELOG.md"
 
 # PEP 735 dependency groups, one per chapter. Keep these in sync with
-# `tools/import_map.toml`; `python tools/deps_scan.py check` enforces it in CI.
+# `tools/deps_scan.toml`; `python tools/deps_scan.py check` enforces it in CI.
 [dependency-groups]
 # crypt was removed from the stdlib in Python 3.13 (PEP 594);
 # standard-crypt is a drop-in backport that provides the same module name.
