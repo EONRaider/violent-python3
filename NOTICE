@@ -1,0 +1,55 @@
+violent-python3
+===============
+
+Python 3 conversion of the source code from the book:
+
+    Violent Python: A Cookbook for Hackers, Forensic Analysts, Penetration
+    Testers and Security Engineers
+    TJ O'Connor
+    Syngress, an imprint of Elsevier, Inc., 2012
+    ISBN 978-1-59749-957-6
+
+Copyright and licensing
+-----------------------
+
+The original source code is the work of its author and publisher, who hold
+the copyright to it. This repository reproduces it, converted to Python 3,
+so that readers of the book can study and run it on current interpreters.
+
+NO OPEN-SOURCE LICENSE IS GRANTED for the contents of this repository. The
+absence of a LICENSE file is deliberate: the maintainers do not own the
+underlying code and cannot license it to you. If you need rights beyond
+reading and running the code for personal study, contact the publisher.
+
+The Python 3 conversion and the repository tooling (pyproject.toml, tools/,
+.github/, Dockerfile, .devcontainer/ and the documentation) were written by
+EONRaider and the contributors listed in the git history.
+
+Bundled third-party files
+-------------------------
+
+These files are included as sample data for the book's exercises. They remain
+under their own terms:
+
+chapter04/geolite2_city.mmdb
+    GeoLite2 City database, built 2020-05-27.
+    This product includes GeoLite Data created by MaxMind, available from
+    https://www.maxmind.com.
+    Distributed under the MaxMind GeoLite2 End User License Agreement, which
+    incorporates CC BY-SA 4.0: https://www.maxmind.com/en/geolite2/eula
+    The EULA asks users to replace outdated copies with current releases. For
+    anything beyond the book's exercises, download a current database with a
+    free MaxMind account.
+
+chapter02/debian_ssh_dsa_1024_x86.tar.bz2
+    Pre-generated 1024-bit DSA keys affected by the Debian OpenSSL
+    predictable-PRNG vulnerability (CVE-2008-0166), as referenced by the book.
+    These keys are public knowledge and are included for the brute-force
+    exercise only.
+
+chapter03/ANONOPS_The_Press_Release.pdf
+    Public document referenced by the book's PDF metadata exercise.
+
+chapter03/firefox_profile/, chapter03/skype_profile/, chapter04/*.pcap,
+chapter01/*.txt, chapter01/evil.zip, chapter02/*.txt, chapter06/mlb-cities.txt
+    Sample data accompanying the book's exercises.
