@@ -65,7 +65,8 @@ pip install -r requirements/ch04.txt # or just one chapter
 ```
 
 `requirements*.txt` carry version ranges. For the exact versions tested in CI, use
-`requirements-lock.txt` from the [latest release](https://github.com/EONRaider/violent-python3/releases/latest).
+`requirements-lock.txt` (and `requirements-lock-bluetooth.txt` for the opt-in group)
+from the [latest release](https://github.com/EONRaider/violent-python3/releases/latest).
 With pip 25.1 or newer, you can also install a chapter's group straight from
 `pyproject.toml` with `pip install --group ch04`.
 
@@ -83,9 +84,13 @@ docker run --rm -it --cap-add=NET_RAW --cap-add=NET_ADMIN ghcr.io/eonraider/viol
 docker build -t violent-python3 . && docker run --rm -it violent-python3
 ```
 
-The image runs as `root` because most raw-socket chapters need it. The container
-is the sandbox, so only add the capabilities a chapter needs. Bluetooth (chapter 5)
-also needs the host's adapter, for example with `--net=host --privileged`.
+The image runs as `root` because most raw-socket chapters need it. With only the
+capabilities above, the container still isolates those scripts from the host, so
+add just what a chapter needs. Bluetooth (chapter 5) is different: it needs the
+host's network namespace to reach the adapter, for example with
+`--net=host --cap-add=NET_RAW --cap-add=NET_ADMIN`. That **removes network
+isolation**, so the container can see and act on all host traffic. Avoid
+`--privileged`, which also gives the container access to every host device.
 
 ### GitHub Codespaces / Dev Containers
 
@@ -113,7 +118,7 @@ dev container already include them; on a host install them yourself:
 | [01](chapter01) | Introduction | `ch01` | `standard-crypt` (not Windows, Python 3.13+) | `crypt` was removed from the stdlib in 3.13 ([PEP 594](https://peps.python.org/pep-0594/)); the backport keeps `passwd_crack.py` working. Like the original module it wraps libc `crypt(3)`, so `passwd_crack.py` does not run on Windows. |
 | [02](chapter02) | Penetration testing | `ch02` | `pexpect`, `python-nmap` | `nmap` binary required. Uses SSH and FTP against hosts you control. |
 | [03](chapter03) | Forensic investigations | `ch03` | `beautifulsoup4`, `pillow`, `pypdf4`, `requests` | `discover_networks.py` and `dump_recyclebin.py` read the Windows registry and need Windows with Administrator rights. Sample Firefox/Skype databases and a PDF are included. |
-| [04](chapter04) | Network traffic analysis | `ch04` | `dpkt`, `geoip2`, `ipy`, `scapy` | Sample `.pcap` files and a GeoLite2 City database are included. Live sniffing needs root / `NET_RAW`. |
+| [04](chapter04) | Network traffic analysis | `ch04` | `dpkt`, `geoip2`, `ipy`, `scapy` | Sample `.pcap` files and a 2020 GeoLite2 City database are included; replace the database with a current download before use (see [NOTICE](NOTICE)). Live sniffing needs root / `NET_RAW`. |
 | [05](chapter05) | Wireless mayhem | `ch05`, `ch05-bluetooth` | `scapy`, `pybluez` (Linux, opt-in) | Wi-Fi scripts need a card in monitor mode. `ninja_print.py` needs the ObexFTP Python 2 bindings, which have no Python 3 port. |
 | [06](chapter06) | Web reconnaissance | `ch06` | `beautifulsoup4`, `mechanicalsoup` | The Google and Twitter scripts target APIs that no longer exist; see the conversion notes. |
 | [07](chapter07) | Antivirus evasion | - | - | Standard library only. |
