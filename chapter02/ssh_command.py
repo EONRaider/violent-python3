@@ -1,6 +1,6 @@
 import pexpect
 
-PROMPT = ['# ', '>>> ', '> ', '\$ ']
+PROMPT = ['# ', '>>> ', '> ', r'\$ ']
 
 
 def send_command(child, cmd):

@@ -13,11 +13,11 @@ class AnonBrowser(mechanicalsoup.StatefulBrowser):
 
     def __init__(self, proxies=None, user_agents=None):
         super().__init__()
-        self.user_agent = [] if user_agents is None else user_agents
+        self.user_agents = [] if user_agents is None else user_agents
         self.proxies = [] if proxies is None else proxies
         self.session.proxies = None
         self.user_agents = self.user_agents + ['Mozilla/4.0 ', 'FireFox/6.01',
-                                              'ExactSearch', 'Nokia7110/1.0']
+                                               'ExactSearch', 'Nokia7110/1.0']
         self.cookie_jar = http.cookiejar.CookieJar()
         self.set_cookiejar(self.cookie_jar)
         self.anonymize()
@@ -28,12 +28,21 @@ class AnonBrowser(mechanicalsoup.StatefulBrowser):
 
     def change_user_agent(self):
         random_user_agent = random.choice(self.user_agents)
-        self.user_agent = random_user_agent
+        # MechanicalSoup sends the agent set via set_user_agent(); assigning to a
+        # plain attribute (as the original did) had no effect on the request.
+        self.set_user_agent(random_user_agent)
 
     def change_proxy(self):
         if self.proxies:
             random_proxy = random.choice(self.proxies)
-            self.session.proxies = {'http': random_proxy}
+            # Route BOTH http and https through the chosen proxy, and stop
+            # requests from consulting the HTTP(S)_PROXY environment variables
+            # (trust_env). Setting only the 'http' scheme, as the original did,
+            # left https requests with no proxy entry: trust_env then let an
+            # https fetch follow HTTPS_PROXY or go out directly, bypassing the
+            # chosen proxy and leaking the real IP.
+            self.session.trust_env = False
+            self.session.proxies = {'http': random_proxy, 'https': random_proxy}
 
     def anonymize(self, sleep=False):
         self.clear_cookies()
