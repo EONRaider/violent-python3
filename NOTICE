@@ -37,9 +37,12 @@ chapter04/geolite2_city.mmdb
     https://www.maxmind.com.
     Distributed under the MaxMind GeoLite2 End User License Agreement, which
     incorporates CC BY-SA 4.0: https://www.maxmind.com/en/geolite2/eula
-    The EULA asks users to replace outdated copies with current releases. For
-    anything beyond the book's exercises, download a current database with a
-    free MaxMind account.
+    This copy is outdated. Section 6.3 of the EULA requires users to stop
+    using and destroy old versions within 30 days of an updated release, and
+    it makes no exception for teaching or exercises. Download a current
+    GeoLite2 City database with a free MaxMind account
+    (https://dev.maxmind.com/geoip/geolite2-free-geolocation-data) and save
+    it as chapter04/geolite2_city.mmdb before running the chapter 4 scripts.
 
 chapter02/debian_ssh_dsa_1024_x86.tar.bz2
     Pre-generated 1024-bit DSA keys affected by the Debian OpenSSL
