@@ -131,11 +131,13 @@ furthermore the book points the reader to acquire such keys in a URL
 `geoip2` should now be used. An attempt was made to keep the newly
   implemented code as similar as possible to the original implementation on
    the book, but some changes had to be made to accommodate the new package
-    structure of `geoip2` and its attributes. The database file necessary to
-     run the script was downloaded from
-     [MaxMind](https://dev.maxmind.com/geoip/geolite2-free-geolocation-data) and made
-      available in the `chapter04` directory. A CLI was also implemented
-     using `argparse`.
+    structure of `geoip2` and its attributes. A CLI was also implemented using
+     `argparse`. The GeoLite2 City database the scripts read is no longer
+      bundled: MaxMind's licence (EULA section 6.3) forbids redistributing an
+       outdated copy, so the scripts now take the database path with a `--db`
+        option (default `geolite2_city.mmdb`) and exit with instructions when it
+         is missing. Download a current database with a free MaxMind licence key
+          via [geoipupdate](https://github.com/maxmind/geoipupdate).
 - `chapter04/print_direction.py` raised a `UnicodeDecodeError` exception when
  opening the file in the original implementation. It has been fixed by adding
   a *rb* argument to the context manager handling the file.
@@ -171,9 +173,9 @@ These dependencies must be installed prior to installing `PyBluez` as a
 - `chapter05/__init__.py` and `chapter06/__init__.py` were added to enable
  the importing of modules from `chapter05/dup.py` and `chapter06/anon_browser.py`,
  respectively.
-- `chapter06/anon_proxy.py` was re-implemented with the `MechanicalSoup`
- Python 3 library. It integrates the modifications that were necessary to
-  `proxy_test.py`, `useragent_test.py` and `print_cookies.py`.
+- `chapter06/proxy_test.py`, `useragent_test.py` and `print_cookies.py` were
+ re-implemented with the `MechanicalSoup` Python 3 library in place of the
+  book's `mechanize`/`urllib2` code.
 - `chapter06/anon_browser.py` was also re-implemented with `MechanicalSoup`
 and went through some modifications in the code. The `cookielib` library
  was replaced by `http.cookiejar` in the constructor method for the
@@ -181,3 +183,42 @@ and went through some modifications in the code. The `cookielib` library
    strings instead of a tuple.
 - `chapter06/link_parser.py` was refactored by using new ways to handle the
  implementations of `re` and `bs4`.
+
+## Dependency refresh (post-2.0.0)
+
+Version 2.0.0 modernized the scaffolding and raised the dependency ranges but
+left the chapter code unverified against them. This pass ran each chapter
+against its current dependencies and made the following behavioural changes,
+validated on Linux / CPython 3.13 except where noted.
+
+- **chapter03 `exif_fetch.py` (Pillow 13):** Pillow 13 removed
+  `Image._getexif()`. The GPS check now reads the dedicated GPSInfo sub-IFD with
+  `getexif().get_ifd(ExifTags.IFD.GPSInfo)`, which is the documented replacement
+  and returns the same data. Verified against generated images with and without
+  GPS tags.
+- **chapter03 SyntaxWarnings:** `discover_networks.py` and `dump_recyclebin.py`
+  embedded Windows registry paths as plain strings with invalid escape sequences
+  (`\M`, `\W`, ...); `chapter02/ssh_command.py` had `'\$ '`. All are now raw
+  strings with identical values, so `compileall -W error::SyntaxWarning` (now run
+  in CI) is clean.
+- **chapter04 geolocation (geoip2 4.8):** `geo_ip.py`, `geo_print.py` and
+  `google_earth_pcap.py` work unchanged against geoip2 4.8 (verified by
+  geolocating a known address). The bundled `geolite2_city.mmdb` was **removed**
+  — MaxMind's licence (EULA 6.3) forbids redistributing an outdated copy — and
+  the scripts now take the database path with a `--db` option, exiting with
+  instructions when it is missing.
+- **chapter04/05 Scapy 2.8:** the DNS flux analysers (`test_domain_flux.py`,
+  `test_fast_flux.py`) parse the bundled pcaps correctly under Scapy 2.8. The
+  live-sniffing scripts need a monitor-mode interface and cannot be exercised in
+  CI.
+- **chapter06 `anon_browser.py` (MechanicalSoup 1.x):** the `AnonBrowser`
+  constructor raised `AttributeError` because it assigned the agent pool to
+  `self.user_agent` but read `self.user_agents`; the pool is now stored
+  consistently. `change_user_agent()` set an inert attribute, so the rotated
+  agent never reached the request — it now calls `set_user_agent()`. The utility
+  scripts (`proxy_test.py`, `useragent_test.py`, `print_cookies.py`) use the
+  MechanicalSoup `StatefulBrowser` API directly, which is unchanged in 1.x.
+- **chapter06 Google/Twitter scripts:** these target the Google AJAX Search API
+  (shut down 2011) and the legacy `search.twitter.com` endpoint (removed ~2013).
+  Both are permanently gone, so the scripts are kept for historical reference
+  only, as noted above and in the README.

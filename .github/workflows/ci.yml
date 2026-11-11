@@ -81,9 +81,9 @@ jobs:
           skip=()
           [[ "$RUNNER_OS" == "Linux" ]] || skip=(--skip-group ch05-bluetooth)
           uv run --frozen python tools/deps_scan.py check --import "${skip[@]}"
-      - name: Every chapter byte-compiles
+      - name: Every chapter byte-compiles without SyntaxWarnings
         shell: bash
-        run: uv run --frozen python -m compileall -q chapter*
+        run: uv run --frozen python -W error::SyntaxWarning -m compileall -q chapter*
 
   docker:
     name: Docker image builds

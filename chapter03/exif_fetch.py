@@ -6,7 +6,7 @@ from urllib.parse import urlsplit
 from os.path import basename
 from bs4 import BeautifulSoup
 from PIL import Image
-from PIL.ExifTags import TAGS
+from PIL.ExifTags import IFD
 
 
 def find_images(url):
@@ -32,16 +32,12 @@ def download_image(tag):
 
 def test_for_exif(img_filename):
     try:
-        exif_data = {}
         img_file = Image.open(img_filename)
-        info = img_file._getexif()
-        if info:
-            for tag, value in list(info.items()):
-                decoded = TAGS.get(tag, tag)
-                exif_data[decoded] = value
-            exif_gps = exif_data['GPSInfo']
-            if exif_gps:
-                print(f'[*] {img_filename} contains GPS MetaData')
+        # Pillow 13 removed Image._getexif(); the GPS block is now read from the
+        # dedicated GPSInfo sub-IFD via getexif().get_ifd().
+        exif_gps = img_file.getexif().get_ifd(IFD.GPSInfo)
+        if exif_gps:
+            print(f'[*] {img_filename} contains GPS MetaData')
     except Exception as e:
         print(f'{"":>3}[-] No {e} found')
         pass

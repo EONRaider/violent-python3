@@ -34,7 +34,7 @@ def wigle_print(username, password, netid):
 
 
 def print_nets(username, password):
-    net = "SOFTWARE\Microsoft\Windows NT\CurrentVersion\\NetworkList\Signatures\\Unmanaged"
+    net = r"SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Signatures\Unmanaged"
     key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, net)
     print('\n[*] Networks You have Joined.')
 

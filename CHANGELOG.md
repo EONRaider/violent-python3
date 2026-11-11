@@ -6,6 +6,39 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+First pass over the book code itself, verifying each chapter against the
+dependency ranges from 2.0.0 and fixing what no longer ran. Details are in
+[docs/CONVERSION_NOTES.md](docs/CONVERSION_NOTES.md).
+
+### Changed
+
+- chapter04 no longer bundles `geolite2_city.mmdb`. MaxMind's GeoLite2 licence
+  (EULA 6.3) forbids redistributing an outdated database, so `geo_ip.py`,
+  `geo_print.py` and `google_earth_pcap.py` now take the database path with a
+  `--db` option (default `geolite2_city.mmdb`) and print download instructions
+  when it is missing. Removing the file shrinks a full checkout from ~100 MB to
+  ~40 MB. The geoip2 4.8 API was verified against the scripts; no other change
+  was needed.
+
+### Fixed
+
+- chapter03 `exif_fetch.py` called `Image._getexif()`, removed in Pillow 13. It
+  now reads the GPSInfo sub-IFD with `getexif().get_ifd(...)`.
+- chapter06 `anon_browser.py`: the `AnonBrowser` constructor raised
+  `AttributeError` (it stored the user-agent pool under one name and read
+  another), and `change_user_agent()` set an attribute MechanicalSoup ignores
+  instead of calling `set_user_agent()`. Both are fixed, so the class works
+  under MechanicalSoup 1.x.
+- Invalid escape sequences (a `SyntaxWarning`, an error on Python 3.12+) in
+  `chapter02/ssh_command.py`, `chapter03/discover_networks.py` and
+  `chapter03/dump_recyclebin.py` are now raw strings with identical values.
+
+### Tooling
+
+- `tools/deps_scan.py` gained a `max_python` field (kept byte-identical with the
+  blackhat-python3 copy) for dependencies with a Python ceiling.
+- CI byte-compiles every chapter with `-W error::SyntaxWarning`.
+
 ## [2.0.0] - Unreleased
 
 Modernizes the repository scaffolding: packaging, environments, CI and
