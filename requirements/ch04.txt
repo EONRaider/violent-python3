@@ -1,0 +1,6 @@
+# Generated from pyproject.toml by `python tools/deps_scan.py requirements`.
+# Do not edit by hand. Groups: ch04
+dpkt>=1.9.8
+geoip2>=4.8.1,<5
+ipy>=1.1
+scapy>=2.6.1,<3

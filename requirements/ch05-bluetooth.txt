@@ -1,0 +1,3 @@
+# Generated from pyproject.toml by `python tools/deps_scan.py requirements`.
+# Do not edit by hand. Groups: ch05-bluetooth
+pybluez @ git+https://github.com/pybluez/pybluez@82cbba8a1ebd4c1e3442dfafd8581d58c50fa39e ; sys_platform == 'linux'
