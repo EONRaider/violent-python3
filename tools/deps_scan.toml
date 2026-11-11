@@ -1,0 +1,41 @@
+# Configuration for tools/deps_scan.py.
+#
+# [modules] maps a top-level import name to the PyPI distribution that provides
+# it. Optional keys:
+#   platform    sys.platform value the dependency is limited to; prefix
+#               with "!" to exclude a platform instead (e.g. "!win32")
+#   group       dependency group, when not the importing chapter's own chNN
+#   min_python  first Python version that needs it (e.g. stdlib removals)
+[modules]
+bluetooth = { dist = "pybluez", platform = "linux", group = "ch05-bluetooth" }
+bs4 = { dist = "beautifulsoup4" }
+crypt = { dist = "standard-crypt", platform = "!win32", min_python = "3.13" }  # PEP 594; Unix-only
+dpkt = { dist = "dpkt" }
+geoip2 = { dist = "geoip2" }
+IPy = { dist = "ipy" }
+mechanicalsoup = { dist = "mechanicalsoup" }
+nmap = { dist = "python-nmap" }
+pexpect = { dist = "pexpect" }
+PIL = { dist = "pillow" }
+PyPDF4 = { dist = "pypdf4" }
+requests = { dist = "requests" }
+scapy = { dist = "scapy" }
+
+# Imports satisfied by software that is not on PyPI. Listed in the README
+# chapter table and skipped by `check`.
+[external]
+obexftp = "ObexFTP Python 2 bindings (no Python 3 port)"
+
+# Known-broken imports: nothing installable provides them on the supported
+# Python versions. `check` prints a WARNING for each use on every run, and the
+# README chapter table marks them as unresolved. Remove an entry once the
+# book code is fixed.
+[unresolved]
+
+# Distributions intentionally declared in a group although no import maps to
+# them, keyed by group.
+[declared_without_import]
+
+# Files excluded from scanning, as repository-relative paths.
+[exclude]
+files = []

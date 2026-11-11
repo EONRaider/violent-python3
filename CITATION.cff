@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: >-
+  If you use this Python 3 conversion, please cite it with the metadata below and
+  credit the original book in the references.
+type: software
+title: "violent-python3: Python 3 source code for Violent Python"
+authors:
+  - alias: EONRaider
+repository-code: "https://github.com/EONRaider/violent-python3"
+url: "https://github.com/EONRaider/violent-python3"
+version: 2.0.0
+keywords:
+  - python3
+  - offensive-security
+  - penetration-testing
+references:
+  - type: book
+    title: "Violent Python: A Cookbook for Hackers, Forensic Analysts, Penetration Testers and Security Engineers"
+    authors:
+      - family-names: "O'Connor"
+        given-names: TJ
+    publisher:
+      name: Syngress
+    year: 2012
+    isbn: "978-1-59749-957-6"

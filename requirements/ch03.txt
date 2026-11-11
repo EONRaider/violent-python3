@@ -1,0 +1,6 @@
+# Generated from pyproject.toml by `python tools/deps_scan.py requirements`.
+# Do not edit by hand. Groups: ch03
+beautifulsoup4>=4.12.3
+pillow>=13.0.0
+pypdf4>=1.27.0
+requests>=2.33.0

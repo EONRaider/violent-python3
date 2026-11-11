@@ -1,0 +1,4 @@
+# Generated from pyproject.toml by `python tools/deps_scan.py requirements`.
+# Do not edit by hand. Groups: ch06
+beautifulsoup4>=4.12.3
+mechanicalsoup>=1.3.0,<2

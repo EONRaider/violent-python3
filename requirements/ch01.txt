@@ -1,0 +1,3 @@
+# Generated from pyproject.toml by `python tools/deps_scan.py requirements`.
+# Do not edit by hand. Groups: ch01
+standard-crypt>=3.13.0; python_version >= '3.13' and sys_platform != 'win32'
