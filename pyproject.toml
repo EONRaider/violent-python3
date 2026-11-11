@@ -3,7 +3,7 @@ name = "violent-python3"
 version = "2.0.0"
 description = "Python 3 conversion of the source code from the book \"Violent Python\" by TJ O'Connor."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 authors = [{ name = "EONRaider" }]
 keywords = ["violent-python", "penetration-testing", "offensive-security", "python3", "book"]
 classifiers = [
@@ -28,15 +28,15 @@ Changelog = "https://github.com/EONRaider/violent-python3/blob/master/CHANGELOG.
 # standard-crypt is a drop-in backport that provides the same module name.
 # Like the stdlib module it wraps libc crypt(3), so it is Unix-only.
 #
-# Version policy: floors are the oldest release that installs on 3.10-3.14 and
-# has no known advisories. Libraries whose API the book code depends on are
+# Version policy: floors are the oldest release that installs on 3.11-3.14 and
+# has no known advisories (checked against OSV). Libraries whose API the book code depends on are
 # capped below their next major version; Dependabot proposes major bumps so
 # each one can be validated against the code before it lands.
 ch01 = ["standard-crypt>=3.13.0; python_version >= '3.13' and sys_platform != 'win32'"]
 ch02 = ["pexpect>=4.9.0", "python-nmap>=0.7.1"]
-ch03 = ["beautifulsoup4>=4.12.3", "pillow>=10.4.0", "pypdf4>=1.27.0", "requests>=2.32.4"]
-ch04 = ["dpkt>=1.9.8", "geoip2>=4.8.1,<5", "ipy>=1.1", "scapy>=2.6.1,<3"]
-ch05 = ["scapy>=2.6.1,<3"]
+ch03 = ["beautifulsoup4>=4.12.3", "pillow>=13.0.0", "pypdf4>=1.27.0", "requests>=2.33.0"]
+ch04 = ["dpkt>=1.9.8", "geoip2>=4.8.1,<5", "ipy>=1.1", "scapy>=2.7.0,<3"]
+ch05 = ["scapy>=2.7.0,<3"]
 # Opt-in: PyBluez needs BlueZ headers (`apt install libbluetooth-dev`) and its
 # last PyPI release (0.23, 2020) does not build on modern setuptools, so it is
 # built from a pinned upstream commit. Linux only.
@@ -47,10 +47,9 @@ ch06 = ["beautifulsoup4>=4.12.3", "mechanicalsoup>=1.3.0,<2"]
 dev = [
     "mypy>=1.13.0",
     "pre-commit>=4.0.1",
-    "pytest>=8.3.3",
+    "pytest>=9.0.3",
     "pytest-cov>=6.0.0",
     "ruff>=0.8.0",
-    "tomli>=2.0.1; python_version < '3.11'",
 ]
 
 [tool.uv]
@@ -62,7 +61,7 @@ default-groups = ["ch01", "ch02", "ch03", "ch04", "ch05", "ch06", "dev"]
 # Linting and type-checking cover the repository tooling only. The book code
 # under chapterNN/ is intentionally kept close to the printed listings.
 [tool.ruff]
-target-version = "py310"
+target-version = "py311"
 line-length = 100
 include = ["tools/**/*.py"]
 
@@ -77,11 +76,11 @@ convention = "google"
 "tools/tests/**" = ["D", "ANN", "PLR2004"]
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.11"
 strict = true
 files = ["tools"]
 
 [tool.pytest.ini_options]
-minversion = "8.0"
+minversion = "9.0"
 testpaths = ["tools/tests"]
 addopts = ["-ra", "--strict-markers", "--strict-config"]

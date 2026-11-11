@@ -1,7 +1,7 @@
 # Violent Python 3
 
 [![CI](https://github.com/EONRaider/violent-python3/actions/workflows/ci.yml/badge.svg)](https://github.com/EONRaider/violent-python3/actions/workflows/ci.yml)
-[![Python 3.10-3.14](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-3776AB?logo=python&logoColor=white)](pyproject.toml)
+[![Python 3.11-3.14](https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-3776AB?logo=python&logoColor=white)](pyproject.toml)
 [![Managed with uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://docs.astral.sh/uv/)
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/EONRaider/violent-python3)
 
@@ -30,7 +30,7 @@ the book. Every change made during the conversion is documented in
 
 ## Quick start
 
-Python 3.10 or newer. Pick one of the following setups.
+Python 3.11 or newer. Pick one of the following setups.
 
 ### uv (recommended)
 

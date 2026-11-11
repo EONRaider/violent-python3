@@ -15,7 +15,7 @@ documentation. **No book code under `chapterNN/` was changed.**
 
 - `pyproject.toml` with one [PEP 735](https://peps.python.org/pep-0735/) dependency
   group per chapter, managed with [uv](https://docs.astral.sh/uv/), plus a committed
-  `uv.lock`. Supports Python 3.10 to 3.14.
+  `uv.lock`. Supports Python 3.11 to 3.14.
 - `requirements/chNN.txt` for installing a single chapter with pip.
 - Opt-in `ch05-bluetooth` group that builds PyBluez from a pinned upstream commit,
   because the last PyPI release no longer builds.
@@ -29,7 +29,7 @@ documentation. **No book code under `chapterNN/` was changed.**
 - `tools/deps_scan.py`: statically checks that every chapter's imports are declared
   in its dependency group, imports each dependency in CI, and generates the
   requirements files.
-- GitHub Actions: an install matrix (Linux, macOS, Windows x Python 3.10-3.14), a
+- GitHub Actions: an install matrix (Linux, macOS, Windows x Python 3.11-3.14), a
   Docker build, link checking, Markdown lint, actionlint and zizmor. Every action is
   pinned to a commit SHA.
 - Dependabot for uv, GitHub Actions, Docker and dev containers.
@@ -44,8 +44,9 @@ documentation. **No book code under `chapterNN/` was changed.**
 - `requirements.txt` is now generated from `pyproject.toml`
   (`python tools/deps_scan.py requirements`). It lists version ranges, and each
   release attaches a pinned `requirements-lock.txt`.
-- Python 3.9 and older are no longer supported. 3.9 reached end of life in
-  October 2025.
+- Python 3.10 and older are no longer supported. 3.10 reached end of life in
+  October 2026, and current security releases of some dependencies (Pillow 13,
+  for example) require 3.11.
 
 ### Possibly breaking: dependency major versions
 
@@ -58,9 +59,9 @@ behaviour against the book code has not been verified yet:
 | --- | --- | --- | --- |
 | `geoip2` | `~=3.0.0` | `>=4.8.1,<5` | chapter04 |
 | `mechanicalsoup` | `~=0.12.0` | `>=1.3.0,<2` | chapter06 |
-| `scapy` | `~=2.4.3` | `>=2.6.1,<3` | chapter04, chapter05 |
+| `scapy` | `~=2.4.3` | `>=2.7.0,<3` (security fix) | chapter04, chapter05 |
 | `pybluez` | `~=0.23` (PyPI) | upstream commit `82cbba8` | chapter05 (opt-in) |
-| `requests` | `~=2.23.0` | `>=2.32.4` (security fixes) | chapter03 |
+| `requests` | `~=2.23.0` | `>=2.33.0` (security fixes) | chapter03 |
 
 ### Removed
 
@@ -75,6 +76,15 @@ behaviour against the book code has not been verified yet:
 
 - The PyBluez environment marker was `sys_platform == 'darwin'`. PyBluez targets
   Linux (BlueZ), so the marker is now `sys_platform == 'linux'`.
+
+### Security
+
+- Version floors no longer admit releases with known advisories:
+  `pillow>=13.0.0` (chapter 3; earlier releases are affected by advisories fixed
+  only in 13.0), `requests>=2.33.0` (chapter 3), `scapy>=2.7.0` (chapters 4 and 5;
+  [GHSA-cq46-m9x9-j8w2](https://github.com/advisories/GHSA-cq46-m9x9-j8w2), code
+  execution when loading an untrusted session file) and `pytest>=9.0.3` (dev). The
+  lockfile moves `filelock`, a dependency of the `pre-commit` tooling, to 4.2.10.
 
 ## Before 2.0.0
 
