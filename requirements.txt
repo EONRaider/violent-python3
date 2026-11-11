@@ -1,6 +1,6 @@
 # Generated from pyproject.toml by `python tools/deps_scan.py requirements`.
 # Do not edit by hand. Groups: ch01, ch02, ch03, ch04, ch05, ch06
-standard-crypt>=3.13.0; python_version >= '3.13'
+standard-crypt>=3.13.0; python_version >= '3.13' and sys_platform != 'win32'
 pexpect>=4.9.0
 python-nmap>=0.7.1
 beautifulsoup4>=4.12.3

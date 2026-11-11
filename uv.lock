@@ -2605,7 +2605,7 @@ source = { virtual = "." }
 
 [package.dev-dependencies]
 ch01 = [
-    { name = "standard-crypt", marker = "python_full_version >= '3.13'" },
+    { name = "standard-crypt", marker = "python_full_version >= '3.13' and sys_platform != 'win32'" },
 ]
 ch02 = [
     { name = "pexpect" },
@@ -2647,7 +2647,7 @@ dev = [
 [package.metadata]
 
 [package.metadata.requires-dev]
-ch01 = [{ name = "standard-crypt", marker = "python_full_version >= '3.13'", specifier = ">=3.13.0" }]
+ch01 = [{ name = "standard-crypt", marker = "python_full_version >= '3.13' and sys_platform != 'win32'", specifier = ">=3.13.0" }]
 ch02 = [
     { name = "pexpect", specifier = ">=4.9.0" },
     { name = "python-nmap", specifier = ">=0.7.1" },

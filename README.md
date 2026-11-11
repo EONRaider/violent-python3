@@ -110,7 +110,7 @@ dev container already include them; on a host install them yourself:
 
 | Chapter | Topic | `uv` group | PyPI packages | Notes |
 | --- | --- | --- | --- | --- |
-| [01](chapter01) | Introduction | `ch01` | `standard-crypt` (Python 3.13+) | `crypt` was removed from the stdlib in 3.13 ([PEP 594](https://peps.python.org/pep-0594/)); the backport keeps `passwd_crack.py` working. |
+| [01](chapter01) | Introduction | `ch01` | `standard-crypt` (not Windows, Python 3.13+) | `crypt` was removed from the stdlib in 3.13 ([PEP 594](https://peps.python.org/pep-0594/)); the backport keeps `passwd_crack.py` working. Like the original module it wraps libc `crypt(3)`, so `passwd_crack.py` does not run on Windows. |
 | [02](chapter02) | Penetration testing | `ch02` | `pexpect`, `python-nmap` | `nmap` binary required. Uses SSH and FTP against hosts you control. |
 | [03](chapter03) | Forensic investigations | `ch03` | `beautifulsoup4`, `pillow`, `pypdf4`, `requests` | `discover_networks.py` and `dump_recyclebin.py` read the Windows registry and need Windows with Administrator rights. Sample Firefox/Skype databases and a PDF are included. |
 | [04](chapter04) | Network traffic analysis | `ch04` | `dpkt`, `geoip2`, `ipy`, `scapy` | Sample `.pcap` files and a GeoLite2 City database are included. Live sniffing needs root / `NET_RAW`. |

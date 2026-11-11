@@ -26,12 +26,13 @@ Changelog = "https://github.com/EONRaider/violent-python3/blob/master/CHANGELOG.
 [dependency-groups]
 # crypt was removed from the stdlib in Python 3.13 (PEP 594);
 # standard-crypt is a drop-in backport that provides the same module name.
+# Like the stdlib module it wraps libc crypt(3), so it is Unix-only.
 #
 # Version policy: floors are the oldest release that installs on 3.10-3.14 and
 # has no known advisories. Libraries whose API the book code depends on are
 # capped below their next major version; Dependabot proposes major bumps so
 # each one can be validated against the code before it lands.
-ch01 = ["standard-crypt>=3.13.0; python_version >= '3.13'"]
+ch01 = ["standard-crypt>=3.13.0; python_version >= '3.13' and sys_platform != 'win32'"]
 ch02 = ["pexpect>=4.9.0", "python-nmap>=0.7.1"]
 ch03 = ["beautifulsoup4>=4.12.3", "pillow>=10.4.0", "pypdf4>=1.27.0", "requests>=2.32.4"]
 ch04 = ["dpkt>=1.9.8", "geoip2>=4.8.1,<5", "ipy>=1.1", "scapy>=2.6.1,<3"]

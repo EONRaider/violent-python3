@@ -2,13 +2,14 @@
 #
 # [modules] maps a top-level import name to the PyPI distribution that provides
 # it. Optional keys:
-#   platform    sys.platform value the dependency is limited to
+#   platform    sys.platform value the dependency is limited to; prefix
+#               with "!" to exclude a platform instead (e.g. "!win32")
 #   group       dependency group, when not the importing chapter's own chNN
 #   min_python  first Python version that needs it (e.g. stdlib removals)
 [modules]
 bluetooth = { dist = "pybluez", platform = "linux", group = "ch05-bluetooth" }
 bs4 = { dist = "beautifulsoup4" }
-crypt = { dist = "standard-crypt", min_python = "3.13" }  # removed from stdlib by PEP 594
+crypt = { dist = "standard-crypt", platform = "!win32", min_python = "3.13" }  # PEP 594; Unix-only
 dpkt = { dist = "dpkt" }
 geoip2 = { dist = "geoip2" }
 IPy = { dist = "ipy" }

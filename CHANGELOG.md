@@ -20,7 +20,8 @@ documentation. **No book code under `chapterNN/` was changed.**
 - Opt-in `ch05-bluetooth` group that builds PyBluez from a pinned upstream commit,
   because the last PyPI release no longer builds.
 - `standard-crypt` backport so `chapter01/passwd_crack.py` keeps working on Python
-  3.13+, where `crypt` was removed from the standard library (PEP 594).
+  3.13+, where `crypt` was removed from the standard library (PEP 594). It is
+  Unix-only, like the module it replaces.
 - Dockerfile and a multi-arch image (`ghcr.io/eonraider/violent-python3`) with
   `nmap`, `tcpdump` and the BlueZ runtime. Images ship with SBOM and provenance
   attestations.
