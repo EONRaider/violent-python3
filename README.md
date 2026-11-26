@@ -73,8 +73,8 @@ With pip 25.1 or newer, you can also install a chapter's group straight from
 
 From 2.0.0 on, each [release](https://github.com/EONRaider/violent-python3/releases) publishes an
 image for `linux/amd64` and `linux/arm64` with every chapter's dependencies, `nmap`,
-`tcpdump` and the BlueZ runtime preinstalled. Until 2.0.0 is out, build the image yourself
-with the last command below:
+`tcpdump` and the BlueZ runtime preinstalled. Until 2.0.0 is out, clone the repository as in
+[Quick start](#quick-start) and build the image yourself with the last command below:
 
 ```shell
 docker run --rm -it ghcr.io/eonraider/violent-python3
@@ -140,7 +140,8 @@ cd violent-python3
 git sparse-checkout set chapter01 chapter03    # any chapters you want
 ```
 
-Or skip cloning entirely and use the [Docker image](#docker).
+From 2.0.0 on, you can also skip cloning entirely and use the
+[Docker image](#docker).
 
 ## Authorized use
 
