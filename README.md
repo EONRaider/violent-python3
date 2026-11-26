@@ -118,7 +118,7 @@ dev container already include them; on a host install them yourself:
 | [01](chapter01) | Introduction | `ch01` | `standard-crypt` (not Windows, Python 3.13+) | `crypt` was removed from the stdlib in 3.13 ([PEP 594](https://peps.python.org/pep-0594/)); the backport keeps `passwd_crack.py` working. Like the original module it wraps libc `crypt(3)`, so `passwd_crack.py` does not run on Windows. |
 | [02](chapter02) | Penetration testing | `ch02` | `pexpect`, `python-nmap` | `nmap` binary required. Uses SSH and FTP against hosts you control. |
 | [03](chapter03) | Forensic investigations | `ch03` | `beautifulsoup4`, `pillow`, `pypdf4`, `requests` | `discover_networks.py` and `dump_recyclebin.py` read the Windows registry and need Windows with Administrator rights. Sample Firefox/Skype databases and a PDF are included. |
-| [04](chapter04) | Network traffic analysis | `ch04` | `dpkt`, `geoip2`, `ipy`, `scapy` | Sample `.pcap` files and a 2020 GeoLite2 City database are included; replace the database with a current download before use (see [NOTICE](NOTICE)). Live sniffing needs root / `NET_RAW`. |
+| [04](chapter04) | Network traffic analysis | `ch04` | `dpkt`, `geoip2`, `ipy`, `scapy` | Sample `.pcap` files are included. The GeoLite2 City database is **not** bundled (MaxMind's licence forbids redistributing an outdated copy); the `geo_*.py` scripts take its path with `--db` — see [NOTICE](NOTICE). Live sniffing needs root / `NET_RAW`. |
 | [05](chapter05) | Wireless mayhem | `ch05`, `ch05-bluetooth` | `scapy`, `pybluez` (Linux, opt-in) | Wi-Fi scripts need a card in monitor mode. `ninja_print.py` needs the ObexFTP Python 2 bindings, which have no Python 3 port. |
 | [06](chapter06) | Web reconnaissance | `ch06` | `beautifulsoup4`, `mechanicalsoup` | The Google and Twitter scripts target APIs that no longer exist; see the conversion notes. |
 | [07](chapter07) | Antivirus evasion | - | - | Standard library only. |
@@ -129,10 +129,10 @@ and may be incomplete; corrections are welcome.
 
 ## Downloading only what you need
 
-A full checkout is about 100 MB, mostly sample data: a 63 MB GeoLite2 database in
-`chapter04/` and a 30 MB archive of weak Debian SSH keys in `chapter02/`. Shallow
-clones (`--depth 1`) save very little because those files are part of the current
-tree. To download just the chapters you want:
+A full checkout is about 40 MB, mostly sample data: the largest single file is a
+30 MB archive of weak Debian SSH keys in `chapter02/`. Shallow clones
+(`--depth 1`) save very little because that file is part of the current tree. To
+download just the chapters you want:
 
 ```shell
 git clone --filter=blob:none --sparse https://github.com/EONRaider/violent-python3.git

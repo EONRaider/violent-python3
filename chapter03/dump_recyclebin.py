@@ -5,7 +5,7 @@ from winreg import OpenKey, QueryValueEx, HKEY_LOCAL_MACHINE
 def sid_to_user(sid):
     try:
         key = OpenKey(HKEY_LOCAL_MACHINE,
-                      "SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList"
+                      r"SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList"
                       + '\\' + sid)
         value, _type = QueryValueEx(key, 'ProfileImagePath')
         user = value.split('\\')[-1]
